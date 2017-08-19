@@ -1,0 +1,11 @@
+server:
+  # コンテナ外からブラウザーでアクセスできるよう、任意のホスト名を許可する
+  host: 0.0.0.0
+
+elasticsearch:
+  # docker-compose.yml で決めたホスト名、ポートで接続する
+  url: http://elasticsearch:9200/
+
+  # Elasticsearch の公式イメージでは以下のユーザー名、パスワードが初期設定されているので kibana にそれを教える
+  username: elastic
+  password: changeme

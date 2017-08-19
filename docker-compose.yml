@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  elasticsearch:
+    # docker exec しやすいようにコンテナ名を指定
+    container_name: elasticsearch
+
+    # 公式イメージを使う
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+
+    # 標準のポートを同じ番号でホストに公開
+    # <host>:<container>
+    ports:
+      - 9200:9200
+
+  kibana:
+    # docker exec しやすいようにコンテナ名を指定
+    container_name: kibana
+
+    # 公式イメージを使う
+    image: docker.elastic.co/kibana/kibana:5.5.1
+
+    # 標準のポートを同じ番号でホストに公開
+    # <host>:<container>
+    ports:
+      - 5601:5601
+
+    # kibana の設定ファイルをコンテナ実行時に渡す
+    # <host>:<container>
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+
+    # elasticsearch コンテナと elasticsearch というホスト名で接続できるようにする
+    # <host>:<container>
+    links:
+      - elasticsearch:elasticsearch
