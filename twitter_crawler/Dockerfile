@@ -12,4 +12,4 @@ VOLUME /root/scripts
 # スクリプトを実行する
 WORKDIR /root/scripts
 CMD ["top"]
-# CMD ["run_crawler.py"]
+# CMD ["python", "run_crawler.py"]
