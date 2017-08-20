@@ -1,0 +1,5 @@
+# Python のキャッシュは無視
+__pycache__
+
+# 秘密情報は誤ってコミットしないようにする
+/twitter_crawler/scripts/config_oauth.py
