@@ -44,8 +44,7 @@ class Crawler:
             "track": trend,
             "text": tweet["text"],
             "created_at": tweet["created_at"],
-            # "geo": tweet["geo"],
-            # "place": tweet["place"],
+            "coordinates": (tweet["coordinates"] or {"coordinates": None})["coordinates"],
         }
         self.__es.index(index="testindex", doc_type="tweet", body=doc)
 
