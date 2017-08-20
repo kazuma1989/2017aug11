@@ -1,0 +1,20 @@
+{
+    "mappings": {
+        "tweet": {
+            "properties": {
+                "created_at": {
+                    "type": "date",
+                    "format": "EEE MMM dd HH:mm:ss Z yyyy"
+                },
+                "text": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                },
+                "track": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                }
+            }
+        }
+    }
+}

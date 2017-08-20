@@ -20,6 +20,11 @@ services:
     # 公式イメージを使う
     image: docker.elastic.co/kibana/kibana:5.5.1
 
+    # elasticsearch コンテナと elasticsearch というホスト名で接続できるようにする
+    # <host>:<container>
+    links:
+      - elasticsearch:elasticsearch
+
     # 標準のポートを同じ番号でホストに公開
     # <host>:<container>
     ports:
@@ -28,9 +33,21 @@ services:
     # kibana の設定ファイルをコンテナ実行時に渡す
     # <host>:<container>
     volumes:
-      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+
+  twitter_crawler:
+    # Dockerfile からビルド
+    build: ./twitter_crawler
+
+    # docker exec しやすいようにコンテナ名を指定
+    container_name: twitter_crawler
 
     # elasticsearch コンテナと elasticsearch というホスト名で接続できるようにする
     # <host>:<container>
     links:
       - elasticsearch:elasticsearch
+
+    # スクリプトをコンテナ実行時に渡す
+    # <host>:<container>
+    volumes:
+      - ./twitter_crawler/scripts:/root/scripts
