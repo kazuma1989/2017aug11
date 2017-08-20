@@ -1,6 +1,24 @@
 version: '3.3'
 
 services:
+  logstash:
+    # docker exec しやすいようにコンテナ名を指定
+    container_name: logstash
+
+    # 公式イメージを使う
+    image: docker.elastic.co/logstash/logstash:5.5.2
+
+    # elasticsearch コンテナと elasticsearch というホスト名で接続できるようにする
+    # <host>:<container>
+    links:
+      - elasticsearch:elasticsearch
+
+    # 設定ファイルをコンテナ実行時に渡す
+    # <host>:<container>
+    volumes:
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
+      - ./logstash/output/:/usr/share/logstash/output/
+
   elasticsearch:
     # docker exec しやすいようにコンテナ名を指定
     container_name: elasticsearch
@@ -30,24 +48,24 @@ services:
     ports:
       - 5601:5601
 
-    # kibana の設定ファイルをコンテナ実行時に渡す
+    # 設定ファイルをコンテナ実行時に渡す
     # <host>:<container>
     volumes:
       - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
 
-  twitter_crawler:
-    # Dockerfile からビルド
-    build: ./twitter_crawler
+  # twitter_crawler:
+  #   # Dockerfile からビルド
+  #   build: ./twitter_crawler
 
-    # docker exec しやすいようにコンテナ名を指定
-    container_name: twitter_crawler
+  #   # docker exec しやすいようにコンテナ名を指定
+  #   container_name: twitter_crawler
 
-    # elasticsearch コンテナと elasticsearch というホスト名で接続できるようにする
-    # <host>:<container>
-    links:
-      - elasticsearch:elasticsearch
+  #   # elasticsearch コンテナと elasticsearch というホスト名で接続できるようにする
+  #   # <host>:<container>
+  #   links:
+  #     - elasticsearch:elasticsearch
 
-    # スクリプトをコンテナ実行時に渡す
-    # <host>:<container>
-    volumes:
-      - ./twitter_crawler/scripts:/root/scripts
+  #   # スクリプトをコンテナ実行時に渡す
+  #   # <host>:<container>
+  #   volumes:
+  #     - ./twitter_crawler/scripts/:/root/scripts/
